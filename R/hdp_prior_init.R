@@ -64,7 +64,14 @@ hdp_prior_init <- function(prior_distn, prior_pseudoc, hh, alphaa, alphab){
                   alphab=alphab)
   hdp@pseudoDP <- 1L + (1:nsig)
 
-  prior_mut_count <- t(round(prior_distn %*% diag(prior_pseudoc)))
+  # NM: `diag` fails on numeric when only one signature passed. Fix using if/else statement:
+  if(length(prior_pseudoc)==1){
+    multiplier = as.matrix(prior_pseudoc)
+  }else{
+    multiplier = daig(prior_pseudoc)
+  }
+  prior_mut_count <- t(round(prior_distn %*% multiplier))
+
   hdp <- hdp_setdata(hdp, 2:numdp(hdp), prior_mut_count)
 
   # initialize numclass and classqq
