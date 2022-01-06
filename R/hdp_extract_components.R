@@ -322,6 +322,7 @@ hdp_extract_components <- function(x, cos.merge=0.90, min.sample=1){
     nco <- length(clust_label)
 
     # average distribution over data categ for each component
+    # NM: Note component 0 is skipped but may still reflect prior if very few signatures used.
     avgdistn <- sapply(2:nco, function(i){
       distns <- sapply(ccc_5, function(x) x[, i]/sum(x[, i]))
       ans <- rowMeans(distns, na.rm=T)
@@ -331,7 +332,7 @@ hdp_extract_components <- function(x, cos.merge=0.90, min.sample=1){
     # compare against original pseudodata distn
     match2_pseudo <- apply(avgdistn, 2, function(x) lsa::cosine(x, pseudodata))
     # NM: Ensure match2_pseudo is a matrix so that names can be assigned
-    match2_pseudo <- as.matrix(match2_pseudo)
+    match2_pseudo <- matrix(match2_pseudo, ncol=nco-1)
     rownames(match2_pseudo) <- priorcc
     colnames(match2_pseudo) <- clust_label[-1]
 
