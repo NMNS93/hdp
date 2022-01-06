@@ -330,6 +330,8 @@ hdp_extract_components <- function(x, cos.merge=0.90, min.sample=1){
 
     # compare against original pseudodata distn
     match2_pseudo <- apply(avgdistn, 2, function(x) lsa::cosine(x, pseudodata))
+    # NM: Ensure match2_pseudo is a matrix so that names can be assigned
+    match2_pseudo <- as.matrix(match2_pseudo)
     rownames(match2_pseudo) <- priorcc
     colnames(match2_pseudo) <- clust_label[-1]
 
