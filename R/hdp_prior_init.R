@@ -68,7 +68,7 @@ hdp_prior_init <- function(prior_distn, prior_pseudoc, hh, alphaa, alphab){
   if(length(prior_pseudoc)==1){
     multiplier = as.matrix(prior_pseudoc)
   }else{
-    multiplier = daig(prior_pseudoc)
+    multiplier = diag(prior_pseudoc)
   }
   prior_mut_count <- t(round(prior_distn %*% multiplier))
 
