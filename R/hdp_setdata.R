@@ -43,8 +43,12 @@ hdp_setdata <- function(hdp, dpindex, data){
   }
 
   # convert data to a list of data item values (not category counts)
-  datass <- apply(data, 1, function(x) rep(1:ncol(data), x))
-
+  # NM: `apply()` return changes depending on input. Replace with for loop to fix.
+  datass <- list()
+  iterseq <- 1:dim(data)[1]
+  for(i in iterseq){
+    datass[[i]] = rep(1:ncol(data), data[i,])
+  }
 
   HELDOUT <- 0L
 
